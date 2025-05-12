@@ -1,11 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { CreateAccountController } from './controllers/create-account.controller';
 import { PrismaService } from './prisma/prisma.service';
+import { ConfigModule } from '@nestjs/config'; //serve para configurar o modulo
+import { envSchema } from 'src/env';
+import { AuthModule } from './auth/auth.module';
+import { AuthenticateController } from './controllers/authenticate-controller';
 
 @Module({ //junta tudo, como se fosse um bundler
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService, PrismaService],
+  imports: [ConfigModule.forRoot({ //forRoot serve para passarmos configurações
+    validate: env => envSchema.parse(env), //env aqui são as variaveis de ambiente que pegamos do .env e usamos o parse que criamos
+    isGlobal: true, //tornar acessivel para todos
+  }),
+    AuthModule,
+  ],
+  controllers: [CreateAccountController, AuthenticateController], //controllers são sempre os receptores dos dados, assim como no projeto anterior (com Fastify())
+  providers: [PrismaService], //aqui são auxliares (semelhante a useCases e Repositories)
 })
 export class AppModule { }

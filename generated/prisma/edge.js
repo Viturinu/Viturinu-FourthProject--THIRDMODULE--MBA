@@ -140,7 +140,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/victor/Documents/MBA/THIRD MODULE/fourth-project--thirdmodule--mba/generated/prisma",
+      "value": "/home/secom/Documentos/MBA/THIRD MODULE/Viturinu-FourthProject--THIRDMODULE--MBA/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -154,7 +154,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/victor/Documents/MBA/THIRD MODULE/fourth-project--thirdmodule--mba/prisma/schema.prisma",
+    "sourceFilePath": "/home/secom/Documentos/MBA/THIRD MODULE/Viturinu-FourthProject--THIRDMODULE--MBA/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -168,12 +168,11 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": null
+        "value": "postgresql://postgres:docker@localhost:5432/nest-clean?schema=public"
       }
     }
   },
