@@ -140,7 +140,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/secom/Documentos/MBA/THIRD MODULE/Viturinu-FourthProject--THIRDMODULE--MBA/generated/prisma",
+      "value": "/home/victor/Documents/MBA/THIRD MODULE/fourth-project--thirdmodule--mba/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -154,7 +154,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/secom/Documentos/MBA/THIRD MODULE/Viturinu-FourthProject--THIRDMODULE--MBA/prisma/schema.prisma",
+    "sourceFilePath": "/home/victor/Documents/MBA/THIRD MODULE/fourth-project--thirdmodule--mba/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

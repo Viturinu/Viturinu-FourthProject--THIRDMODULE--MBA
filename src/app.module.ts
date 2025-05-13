@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config'; //serve para configurar o modulo
 import { envSchema } from 'src/env';
 import { AuthModule } from './auth/auth.module';
 import { AuthenticateController } from './controllers/authenticate-controller';
+import { CreateQuestionController } from './controllers/create-question.controller';
+import { FetchRecentQuestionsController } from './controllers/fetch-recent-questions.controller';
 
 @Module({ //junta tudo, como se fosse um bundler
   imports: [ConfigModule.forRoot({ //forRoot serve para passarmos configurações
@@ -13,7 +15,7 @@ import { AuthenticateController } from './controllers/authenticate-controller';
   }),
     AuthModule,
   ],
-  controllers: [CreateAccountController, AuthenticateController], //controllers são sempre os receptores dos dados, assim como no projeto anterior (com Fastify())
+  controllers: [CreateAccountController, AuthenticateController, CreateQuestionController, FetchRecentQuestionsController], //controllers são sempre os receptores dos dados, assim como no projeto anterior (com Fastify())
   providers: [PrismaService], //aqui são auxliares (semelhante a useCases e Repositories)
 })
 export class AppModule { }

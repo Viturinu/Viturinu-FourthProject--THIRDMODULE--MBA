@@ -12,11 +12,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
         // this.client = new PrismaClient() //instancia 
     }
 
-    onModuleInit() {
+    onModuleInit() { //quando algo será inicializado, realizar o que está no corpo, no caso a conexão
         return this.$connect()
     }
 
-    onModuleDestroy() {
+    onModuleDestroy() { //quando algo será destruido, realizar o que está no corpo, no caso a desconexão
         return this.$disconnect()
     }
 
