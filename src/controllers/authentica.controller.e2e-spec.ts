@@ -1,4 +1,4 @@
-import { PrismaService } from "@/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import { AppModule } from "../app.module";
 import { INestApplication } from "@nestjs/common";
 import { Test } from '@nestjs/testing';
@@ -12,16 +12,17 @@ describe("Authenticate (E2E)", () => {
     let prisma: PrismaService
 
     beforeAll(async () => {
-        const moduleRef = await Test.createTestingModule({
-            imports: [AppModule],
+        const moduleRef = await Test.createTestingModule({ //Test é uma função do proprio Nest para realizarmos testes na nossa aplicação
+            imports: [AppModule], //usando o appModule pra criar esse servidor de testes
         })
-            .compile();
+            .compile(); //compila e joga no moduleRef 
 
-        app = moduleRef.createNestApplication();
+        app = moduleRef.createNestApplication(); //aqui é nosso servidor que fica armazenado na constante 'app', similar ao que temos no main.ts () const app = await NestFactory.create(AppModule, { ... )
 
-        prisma = moduleRef.get(PrismaService)
+        prisma = moduleRef.get(PrismaService) //aqui ele busca o provider "PrismaService" que foi declarado lá no AppModule
 
-        await app.init();
+        await app.init(); //aqui ele está inicializando o servidor, similar ao que ocorre no main.ts | await app.listen(port);
+
     });
 
     test("[POST]/sessions", async () => {
@@ -37,8 +38,6 @@ describe("Authenticate (E2E)", () => {
             email: "johndoe@gmail.com",
             password: "123456",
         })
-
-        expect(response.statusCode).toBe(201)
 
         expect(response.statusCode).toBe(201)
         expect(response.body).toEqual({

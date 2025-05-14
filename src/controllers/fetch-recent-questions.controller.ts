@@ -1,7 +1,5 @@
-import { Body, Controller, Get, Post, Query, Req, Request, UseGuards, UsePipes } from "@nestjs/common";
-import { CurrentUser } from "src/auth/current-user-decorator";
+import { Controller, Get, Query, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
-import { UserPayload } from "src/auth/jwt.strategy";
 import { ZodValidationPipe } from "src/pipes/zod-validators-pipe";
 import { PrismaService } from "src/prisma/prisma.service";
 import { z } from "zod"
@@ -18,7 +16,7 @@ const queryValidationPipe = new ZodValidationPipe(pageQueryParamSchema)
 @UseGuards(JwtAuthGuard) //esse jwt quer dizer que eu quero usar a estrategia passport-jwt
 export class FetchRecentQuestionsController {
     constructor(
-        private prisma: PrismaService
+        private prisma: PrismaService //aqui é um componenten injectable que precisa estar no providers para ser utilizado aqui
     ) { } //pegando a conexão com o banco de dados que fizemos lá dentro da folder Prisma
 
     @Get()

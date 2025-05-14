@@ -1,7 +1,8 @@
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'node:path'; // <-- Adicione esta linha
-// import tsConfigPaths from "vite-tsconfig-paths" //Isso aqui permite os testes vitest utilizar os paths que definimos lá no tsconfig.ts
+
+// const tsConfigPaths = await import("vite-tsconfig-paths"); // Dynamically import the module
 
 //teste unitario
 export default defineConfig({

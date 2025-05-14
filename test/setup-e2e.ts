@@ -2,6 +2,9 @@ import { PrismaClient } from "generated/prisma/client"
 import { execSync } from "node:child_process"
 import { randomUUID } from "node:crypto"
 
+const schemaId = randomUUID()
+const prisma = new PrismaClient()
+
 function generateUniqueDatabaseURL(schemaId: string) {
     if (!process.env.DATABASE_URL) { //DATABASE_URL="postgresql://postgres:docker@localhost:5432/nest-clean?schema=public" | No postgrees podemos mudar o schema e teremos um 'novo banco de dados' dentro do próprio banco, como se fosse uma branch
         throw new Error("Please provide a DATABASE_URL environment variable.")
@@ -14,9 +17,6 @@ function generateUniqueDatabaseURL(schemaId: string) {
     return url.toString()
 }
 
-const schemaId = randomUUID()
-
-const prisma = new PrismaClient()
 
 beforeAll(async () => {
     const databaseURL = generateUniqueDatabaseURL(randomUUID())

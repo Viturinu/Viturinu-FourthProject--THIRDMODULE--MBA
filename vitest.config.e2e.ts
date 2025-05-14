@@ -1,7 +1,7 @@
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'node:path'; // <-- Adicione esta linha
-// import tsConfigPaths from "vite-tsconfig-paths" //Isso aqui permite os testes vitest utilizar os paths que definimos lá no tsconfig.ts
+import tsConfigPaths from "vite-tsconfig-paths" //Isso aqui permite os testes vitest utilizar os paths que definimos lá no tsconfig.ts
 
 //teste e2e - as config padrão que o vistest vai buscar são do vitest.config.ts, no entanto no páckage.json estamos especificando este config com uma flag
 export default defineConfig({
@@ -17,7 +17,7 @@ export default defineConfig({
             // Explicitly set the module type to avoid inheriting this value from a `.swcrc` config file
             module: { type: 'es6' },
         }),
-        // tsConfigPaths(), //adicionando o plugin para ficar possivel usar os paths nos tests
+        tsConfigPaths(), //adicionando o plugin para ficar possivel usar os paths nos tests
     ],
     resolve: {
         alias: {

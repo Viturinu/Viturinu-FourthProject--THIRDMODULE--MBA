@@ -1,5 +1,5 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
-import { PrismaClient } from "generated/prisma";
+import { PrismaClient } from "generated/prisma/client";
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy { //como se fosse a conexão com o bancoi que fizemos no projeto passado
@@ -12,11 +12,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
         // this.client = new PrismaClient() //instancia 
     }
 
-    onModuleInit() { //quando algo será inicializado, realizar o que está no corpo, no caso a conexão
+    onModuleInit() { //quando o módulo que usa esse Injectable é inicializado ele executa a função abaixo, no caso a conexão
         return this.$connect()
     }
 
-    onModuleDestroy() { //quando algo será destruido, realizar o que está no corpo, no caso a desconexão
+    onModuleDestroy() { //quando o módulo que usa esse Injectable é destruído ele executa a função abaixo, no caso a conexão
         return this.$disconnect()
     }
 

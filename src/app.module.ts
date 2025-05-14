@@ -9,7 +9,7 @@ import { CreateQuestionController } from './controllers/create-question.controll
 import { FetchRecentQuestionsController } from './controllers/fetch-recent-questions.controller';
 
 @Module({ //junta tudo, como se fosse um bundler
-  imports: [ConfigModule.forRoot({ //forRoot serve para passarmos configurações
+  imports: [ConfigModule.forRoot({ //forRoot serve para passarmos configurações, bem como variaveis de ambiente
     validate: env => envSchema.parse(env), //env aqui são as variaveis de ambiente que pegamos do .env e usamos o parse que criamos
     isGlobal: true, //tornar acessivel para todos
   }),
@@ -17,5 +17,6 @@ import { FetchRecentQuestionsController } from './controllers/fetch-recent-quest
   ],
   controllers: [CreateAccountController, AuthenticateController, CreateQuestionController, FetchRecentQuestionsController], //controllers são sempre os receptores dos dados, assim como no projeto anterior (com Fastify())
   providers: [PrismaService], //aqui são auxliares (semelhante a useCases e Repositories)
+  exports: [PrismaService]
 })
 export class AppModule { }
