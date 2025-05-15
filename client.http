@@ -6,19 +6,20 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-    "name": "Thales Oliveira Almeida",
-    "email": "thales.almeida.ti@gmail.com",
-    "password": "123456"
+  "name": "Diego Fernandes",
+  "email": "diego@rocketseat.com.br",
+  "password": "123456"
 }
 
 ###
+
 # @name authenticate
 POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-    "email": "farley.almeida.ti@gmail.com",
-    "password": "123456"
+  "email": "diego@rocketseat.com.br",
+  "password": "123456"
 }
 
 ###
@@ -29,8 +30,8 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "title": "Nova pergunta 2",
-    "content" : "Conteúdo da pergunta2"
+  "title": "Nova pergunta 2",
+  "content": "Teste"
 }
 
 ###

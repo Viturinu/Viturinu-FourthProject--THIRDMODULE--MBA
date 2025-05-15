@@ -1,32 +1,51 @@
-import { PrismaClient } from "generated/prisma/client"
-import { execSync } from "node:child_process"
-import { randomUUID } from "node:crypto"
+import { config } from 'dotenv'
 
-const schemaId = randomUUID()
+import { PrismaClient } from '@prisma/client'
+import { randomUUID } from 'node:crypto'
+import { execSync } from 'node:child_process'
+import { DomainEvents } from '@/core/events/domain-events'
+import { Redis } from 'ioredis'
+import { envSchema } from '@/infra/env/env'
+
+config({ path: '.env', override: true })
+config({ path: '.env.test', override: true })
+
+const env = envSchema.parse(process.env)
+
 const prisma = new PrismaClient()
+const redis = new Redis({
+  host: env.REDIS_HOST,
+  port: env.REDIS_PORT,
+  db: env.REDIS_DB,
+})
 
 function generateUniqueDatabaseURL(schemaId: string) {
-    if (!process.env.DATABASE_URL) { //DATABASE_URL="postgresql://postgres:docker@localhost:5432/nest-clean?schema=public" | No postgrees podemos mudar o schema e teremos um 'novo banco de dados' dentro do próprio banco, como se fosse uma branch
-        throw new Error("Please provide a DATABASE_URL environment variable.")
-    }
+  if (!env.DATABASE_URL) {
+    throw new Error('Please provider a DATABASE_URL environment variable')
+  }
 
-    const url = new URL(process.env.DATABASE_URL)
+  const url = new URL(env.DATABASE_URL)
 
-    url.searchParams.set("schema", schemaId)
+  url.searchParams.set('schema', schemaId)
 
-    return url.toString()
+  return url.toString()
 }
 
+const schemaId = randomUUID()
 
 beforeAll(async () => {
-    const databaseURL = generateUniqueDatabaseURL(randomUUID())
+  const databaseURL = generateUniqueDatabaseURL(schemaId)
 
-    process.env.DATABASE_URL = databaseURL //estamos sobreescreveneod as variaveis de ambiente com as novas variaveis geradas - ele sobrescreve toda vez que o teste é gerado, mas assim que é executado o projeto sem os testes ele faz a leitura do arquivo novamente
+  process.env.DATABASE_URL = databaseURL
 
-    execSync("npx prisma migrate deploy") //deplor no lugar do dev, pois deploy ele roda as migration no banco, já o dev faz a leitura do schema pra ver se algo foi alterado e alterar isso no banco, já o deploy sobe as tabelas sem tantos checks
+  DomainEvents.shouldRun = false
+
+  await redis.flushdb()
+
+  execSync('pnpm prisma migrate deploy')
 })
 
 afterAll(async () => {
-    prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`) //pois será feito uma execução perigoso, por isso precisa ser unsafe
-    prisma.$disconnect
+  await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`)
+  await prisma.$disconnect()
 })
